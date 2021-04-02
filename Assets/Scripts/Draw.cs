@@ -22,7 +22,7 @@ public class Draw : MonoBehaviour
         touchPointObjects = new GameObject[TOUCH_POINTS];
         for (int i = 0; i < TOUCH_POINTS; i++)
         {
-            GameObject drawPoint = Instantiate(DrawPoint, new Vector3(0,0,0), transform.parent.rotation);
+            GameObject drawPoint = Instantiate(DrawPoint, new Vector3(10000,0,0), transform.parent.rotation);
             var sphereRenderer = drawPoint.GetComponent<Renderer>();
             sphereRenderer.material.SetColor("_Color", new Color(
                     Random.Range(0f, 1f), 
@@ -51,19 +51,21 @@ public class Draw : MonoBehaviour
 
             UpdateTouch(touch.fingerId, touch.position);
         }
-
-        if(Input.GetMouseButtonDown(0))
+        if (Input.touchCount == 0)
         {
-            AddTouch(MOUSE_TOUCH_INDEX);
+            if (Input.GetMouseButtonDown(0))
+            {
+                AddTouch(MOUSE_TOUCH_INDEX);
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                RemoveTouch(MOUSE_TOUCH_INDEX);
+            }
+            else if (Input.GetMouseButton(0))
+            {
+                UpdateTouch(MOUSE_TOUCH_INDEX, Input.mousePosition);
+            }
         }
-        if(Input.GetMouseButtonUp(0))
-        {
-            RemoveTouch(MOUSE_TOUCH_INDEX);
-        }
-        else if (Input.GetMouseButton(0))
-		{
-            UpdateTouch(MOUSE_TOUCH_INDEX, Input.mousePosition);
-		}
     }
 
     void AddTouch(int idx)

@@ -29,6 +29,7 @@ public class DrawController : MonoBehaviour
                     Random.Range(0f, 1f), 
                     Random.Range(0f, 1f)));
             drawPoint.transform.parent = transform.parent;
+            drawPoint.transform.localScale = new Vector3(1, 1, 1) * 0.4f;
             touchPointObjects[i] = drawPoint;
             freeIdx.Add(i);
         }

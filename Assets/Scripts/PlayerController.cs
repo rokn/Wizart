@@ -15,13 +15,30 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
 
     public float gravityForce = 9.81f;
-    public float jumpAmount;
 
     Vector3 velocity = new Vector3();
-    bool jumpPressed = false;
 
-    // Update is called once per frame
-    void FixedUpdate()
+    Vector3 targetPosition;
+    bool arrived = true;
+
+	void Update()
+	{
+        if(Input.GetMouseButtonDown(1))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Debug.Log("Right Click");
+
+            RaycastHit info;
+            if(Physics.Raycast(ray, out info, Mathf.Infinity, groundLayer))
+            {
+                Debug.Log("Target hit");
+                targetPosition = info.point;
+                arrived = false;
+            }
+        }
+    }
+	
+	void FixedUpdate()
     {
 		bool onGround = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
 
@@ -30,34 +47,27 @@ public class PlayerController : MonoBehaviour
 			velocity.y = -2f;
 		}
 
-
-		//if (Input.GetAxis("Jump") > 0 && onGround)
-		//{
-		//velocity.y += jumpAmount;
-		//jumpPressed = true;
-		//}
-		//      if (Input.GetAxis("Jump") < Mathf.Epsilon)
-		//{
-		//          jumpPressed = false;
-		//}
-
-		float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(-vertical, 0, horizontal).normalized;
-
-        if (direction.magnitude > 0.1)
+        if (!arrived)
         {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            //float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-            //transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            Vector3 direction = targetPosition - transform.position;
 
-            Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward * speed;
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+			float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+			transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            float moveAmount = speed;
+            if (direction.magnitude <= speed * Time.fixedDeltaTime*2)
+            {
+                moveAmount = direction.magnitude / Time.fixedDeltaTime;
+                arrived = true;
+			}
+			Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward * moveAmount;
             velocity = new Vector3(moveDirection.x, velocity.y, moveDirection.z);
         }
 
         controller.Move(velocity * Time.fixedDeltaTime);
         velocity.x = 0f;
-		velocity.y += -gravityForce * Time.deltaTime;
+		velocity.y += -gravityForce * Time.fixedDeltaTime;
 		velocity.z = 0f;
     }
 }

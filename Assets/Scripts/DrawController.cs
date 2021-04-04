@@ -6,6 +6,7 @@ using System.Linq;
 public class DrawController : MonoBehaviour
 {
     public GameObject DrawPoint;
+    public LayerMask groundLayer;
 
     const int TOUCH_POINTS = 10;
     const int MOUSE_TOUCH_INDEX = 20;
@@ -22,14 +23,14 @@ public class DrawController : MonoBehaviour
         touchPointObjects = new GameObject[TOUCH_POINTS];
         for (int i = 0; i < TOUCH_POINTS; i++)
         {
-            GameObject drawPoint = Instantiate(DrawPoint, new Vector3(10000,0,0), transform.parent.rotation);
+            GameObject drawPoint = Instantiate(DrawPoint, new Vector3(10000,0,0), Quaternion.identity);
             var sphereRenderer = drawPoint.GetComponent<Renderer>();
             sphereRenderer.material.SetColor("_Color", new Color(
                     Random.Range(0f, 1f), 
                     Random.Range(0f, 1f), 
                     Random.Range(0f, 1f)));
             drawPoint.transform.parent = transform.parent;
-            drawPoint.transform.localScale = new Vector3(1, 1, 1) * 0.4f;
+            drawPoint.transform.localScale = new Vector3(1, 1, 1);
             touchPointObjects[i] = drawPoint;
             freeIdx.Add(i);
         }
@@ -40,6 +41,7 @@ public class DrawController : MonoBehaviour
     {
         foreach (Touch touch in Input.touches)
         {
+            Debug.Log(touch.altitudeAngle);
             if (touch.phase == TouchPhase.Began)
             {
                 AddTouch(touch.fingerId);
@@ -56,6 +58,7 @@ public class DrawController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                Debug.Log("MouseTouch");
                 AddTouch(MOUSE_TOUCH_INDEX);
             }
             if (Input.GetMouseButtonUp(0))
@@ -64,6 +67,7 @@ public class DrawController : MonoBehaviour
             }
             else if (Input.GetMouseButton(0))
             {
+                Debug.Log("MouseUpdate");
                 UpdateTouch(MOUSE_TOUCH_INDEX, Input.mousePosition);
             }
         }
@@ -89,10 +93,11 @@ public class DrawController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(touchPosition);
 
         RaycastHit info;
-        if(Physics.Raycast(ray, out info))
+        if(Physics.Raycast(ray, out info, Mathf.Infinity, groundLayer))
         {
             Transform t = touchPointObjects[touchToIdx[idx]].transform;
-            t.position = new Vector3(info.point.x, info.point.y, info.point.z);
+            t.forward = info.normal;
+            t.position = new Vector3(info.point.x, info.point.y, info.point.z) + t.forward*0.15f;
         }
     }
 }

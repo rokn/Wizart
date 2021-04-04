@@ -23,15 +23,13 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
-        if(Input.GetMouseButtonDown(1))
+        if(Input.GetMouseButtonDown(1) && Input.touchCount == 0)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Debug.Log("Right Click");
 
             RaycastHit info;
             if(Physics.Raycast(ray, out info, Mathf.Infinity, groundLayer))
             {
-                Debug.Log("Target hit");
                 targetPosition = info.point;
                 arrived = false;
             }

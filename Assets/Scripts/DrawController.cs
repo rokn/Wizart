@@ -1,37 +1,37 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class DrawController : MonoBehaviour
 {
-    public GameObject DrawPoint;
+    public GameObject drawPoint;
     public LayerMask groundLayer;
+    public Camera mainCamera;
 
-    const int TOUCH_POINTS = 10;
-    const int MOUSE_TOUCH_INDEX = 20;
+    const int TouchPoints = 10;
+    const int MouseTouchIndex = 20;
     GameObject[] touchPointObjects;
 
     Dictionary<int, int> touchToIdx;
     HashSet<int> freeIdx;
+    static readonly int ColorProp = Shader.PropertyToID("_Color");
 
-    // Start is called before the first frame update
     void Start()
     {
         touchToIdx = new Dictionary<int, int>();
         freeIdx = new HashSet<int>();
-        touchPointObjects = new GameObject[TOUCH_POINTS];
-        for (int i = 0; i < TOUCH_POINTS; i++)
+        touchPointObjects = new GameObject[TouchPoints];
+        for (int i = 0; i < TouchPoints; i++)
         {
-            GameObject drawPoint = Instantiate(DrawPoint, new Vector3(10000,0,0), Quaternion.identity);
-            var sphereRenderer = drawPoint.GetComponent<Renderer>();
-            sphereRenderer.material.SetColor("_Color", new Color(
+            GameObject drawPointInstance = Instantiate(this.drawPoint, new Vector3(10000,0,0), Quaternion.identity);
+            Renderer sphereRenderer = drawPointInstance.GetComponent<Renderer>();
+            sphereRenderer.material.SetColor(ColorProp, new Color(
                     Random.Range(0f, 1f), 
                     Random.Range(0f, 1f), 
                     Random.Range(0f, 1f)));
-            drawPoint.transform.parent = transform.parent;
-            drawPoint.transform.localScale = new Vector3(1, 1, 1);
-            touchPointObjects[i] = drawPoint;
+            drawPointInstance.transform.parent = transform.parent;
+            drawPointInstance.transform.localScale = new Vector3(1, 1, 1)* 1.8f;
+            touchPointObjects[i] = drawPointInstance;
             freeIdx.Add(i);
         }
     }
@@ -41,45 +41,41 @@ public class DrawController : MonoBehaviour
     {
         foreach (Touch touch in Input.touches)
         {
-            Debug.Log(touch.altitudeAngle);
-            if (touch.phase == TouchPhase.Began)
+            switch (touch.phase)
             {
-                AddTouch(touch.fingerId);
-            } 
-            else if (touch.phase == TouchPhase.Ended)
-            {
-                RemoveTouch(touch.fingerId);
-                continue;
+                case TouchPhase.Began:
+                    AddTouch(touch.fingerId);
+                    break;
+                case TouchPhase.Ended:
+                    RemoveTouch(touch.fingerId);
+                    continue;
             }
 
             UpdateTouch(touch.fingerId, touch.position);
         }
-        if (Input.touchCount == 0)
+
+        if (Input.touchCount != 0) return;
+        
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                Debug.Log("MouseTouch");
-                AddTouch(MOUSE_TOUCH_INDEX);
-            }
-            if (Input.GetMouseButtonUp(0))
-            {
-                RemoveTouch(MOUSE_TOUCH_INDEX);
-            }
-            else if (Input.GetMouseButton(0))
-            {
-                Debug.Log("MouseUpdate");
-                UpdateTouch(MOUSE_TOUCH_INDEX, Input.mousePosition);
-            }
+            AddTouch(MouseTouchIndex);
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            RemoveTouch(MouseTouchIndex);
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            UpdateTouch(MouseTouchIndex, Input.mousePosition);
         }
     }
 
     void AddTouch(int idx)
-	{
-        if(freeIdx.Count != 0)
-        {
-            touchToIdx[idx] = freeIdx.First();
-            freeIdx.Remove(touchToIdx[idx]);
-        }
+    {
+        if (freeIdx.Count == 0) return;
+        
+        touchToIdx[idx] = freeIdx.First();
+        freeIdx.Remove(touchToIdx[idx]);
     }
 
     void RemoveTouch(int idx)
@@ -90,14 +86,13 @@ public class DrawController : MonoBehaviour
     void UpdateTouch(int idx, Vector2 touchPosition)
 	{
         // Construct a ray from the current touch coordinates
-        Ray ray = Camera.main.ScreenPointToRay(touchPosition);
+        Ray ray = mainCamera.ScreenPointToRay(touchPosition);
 
-        RaycastHit info;
-        if(Physics.Raycast(ray, out info, Mathf.Infinity, groundLayer))
-        {
-            Transform t = touchPointObjects[touchToIdx[idx]].transform;
-            t.forward = info.normal;
-            t.position = new Vector3(info.point.x, info.point.y, info.point.z) + t.forward*0.15f;
-        }
+        bool hit = Physics.Raycast(ray, out RaycastHit info, Mathf.Infinity, groundLayer);
+        if (!hit) return;
+        
+        Transform t = touchPointObjects[touchToIdx[idx]].transform;
+        t.forward = info.normal;
+        t.position = new Vector3(info.point.x, info.point.y, info.point.z) + t.forward*0.15f;
     }
 }

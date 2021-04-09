@@ -43,7 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2768b21d3f2b667428b1cba80739097d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DrawPoint: {fileID: 6183529037297236745, guid: 2f604f37f9d07bb4da41075ef7a93588, type: 3}
+  drawPoint: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  mainCamera: {fileID: 3772665226284874246}
 --- !u!1 &3772665225124507677
 GameObject:
   m_ObjectHideFlags: 0

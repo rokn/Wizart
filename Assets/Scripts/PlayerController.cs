@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+using Lean.Touch;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     public CharacterController controller;
-    //public Transform cam;
+    
     public float speed;
     public float turnSmoothTime = 0.1f;
+    public Camera mainCamera;
     float turnSmoothVelocity;
 
     public Transform groundCheck;
@@ -21,26 +21,47 @@ public class PlayerController : MonoBehaviour
     Vector3 targetPosition;
     bool arrived = true;
 
-	void Update()
+    void OnEnable()
+    {
+        LeanTouch.OnFingerTap += HandleFingerTap;
+    }
+
+    void OnDisable()
+    {
+        LeanTouch.OnFingerTap -= HandleFingerTap;
+    }
+
+    void HandleFingerTap(LeanFinger finger)
+    {
+        Ray ray = mainCamera.ScreenPointToRay(finger.ScreenPosition);
+
+        bool hit = Physics.Raycast(ray, out RaycastHit info, Mathf.Infinity, groundLayer);
+        if (!hit) return;
+        
+        targetPosition = info.point;
+        arrived = false;
+    }
+
+    void Update()
 	{
         if(Input.GetMouseButtonDown(1) && Input.touchCount == 0)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-            RaycastHit info;
-            if(Physics.Raycast(ray, out info, Mathf.Infinity, groundLayer))
-            {
-                targetPosition = info.point;
-                arrived = false;
-            }
+            bool hit = Physics.Raycast(ray, out RaycastHit info, Mathf.Infinity, groundLayer);
+            if (!hit) return;
+            
+            targetPosition = info.point;
+            arrived = false;
         }
-    }
-	
-	void FixedUpdate()
-    {
-		bool onGround = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
 
-		if(onGround)
+    }
+
+    void FixedUpdate()
+    {
+		bool ground = Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
+
+		if(ground)
 		{
 			velocity.y = -2f;
 		}

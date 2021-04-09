@@ -1,0 +1,11 @@
+﻿# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/projectSettingsUpdater.xml
+/contentModel.xml
+/.idea.Wizart.iml
+# Datasource local storage ignored files
+/../../../../../../../../../:\Users\amind\Programming\Unity\Wizart\.idea\.idea.Wizart\.idea/dataSources/
+/dataSources.local.xml

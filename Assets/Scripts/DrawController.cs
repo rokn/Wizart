@@ -39,6 +39,32 @@ public class DrawController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HandleTouchInput();
+        
+        if (Input.touchCount != 0) return;
+        
+        HandleMouseInput();
+    }
+
+    void HandleMouseInput()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            AddTouch(MouseTouchIndex);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            RemoveTouch(MouseTouchIndex);
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            UpdateTouch(MouseTouchIndex, Input.mousePosition);
+        }
+    }
+
+    void HandleTouchInput()
+    {
         foreach (Touch touch in Input.touches)
         {
             switch (touch.phase)
@@ -52,21 +78,6 @@ public class DrawController : MonoBehaviour
             }
 
             UpdateTouch(touch.fingerId, touch.position);
-        }
-
-        if (Input.touchCount != 0) return;
-        
-        if (Input.GetMouseButtonDown(0))
-        {
-            AddTouch(MouseTouchIndex);
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            RemoveTouch(MouseTouchIndex);
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            UpdateTouch(MouseTouchIndex, Input.mousePosition);
         }
     }
 

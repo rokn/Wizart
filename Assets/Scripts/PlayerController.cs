@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
 
     public float gravityForce = 9.81f;
 
+    const float MinDistance = 0.5f;
     Vector3 velocity = new Vector3();
 
     Vector3 targetPosition;
@@ -43,18 +44,23 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update()
-	{
-        if(Input.GetMouseButtonDown(1) && Input.touchCount == 0)
-        {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+    {
+        HandleInputUpdate();
+    }
 
-            bool hit = Physics.Raycast(ray, out RaycastHit info, Mathf.Infinity, groundLayer);
-            if (!hit) return;
-            
-            targetPosition = info.point;
-            arrived = false;
-        }
+    void HandleInputUpdate()
+    {
+        if (!Input.GetMouseButton(1) || Input.touchCount != 0) return;
+        
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
+        bool hit = Physics.Raycast(ray, out RaycastHit info, Mathf.Infinity, groundLayer);
+        if (!hit) return;
+
+        if (Vector3.Distance(info.point, transform.position) < MinDistance) return;
+        
+        targetPosition = info.point;
+        arrived = false;
     }
 
     void FixedUpdate()

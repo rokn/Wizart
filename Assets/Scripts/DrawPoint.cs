@@ -5,22 +5,19 @@ using UnityEngine;
 public class DrawPoint : MonoBehaviour
 {
     new ParticleSystem particleSystem;
-    void Start() {
+    void Start()
+    {
+        particleSystem = GetComponent<ParticleSystem>();
         particleSystem.Stop();
     }
 
     void Activate()
     {
+        particleSystem.Play();
     }
 
     void Disable()
     {
         particleSystem.Stop();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

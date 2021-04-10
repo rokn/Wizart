@@ -456,6 +456,7 @@ MonoBehaviour:
   controller: {fileID: 536789553}
   speed: 3
   turnSmoothTime: 0.1
+  mainCamera: {fileID: 1835205998}
   groundCheck: {fileID: 1452675888}
   groundCheckRadius: 0.5
   groundLayer:
@@ -1165,6 +1166,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3772665224694940075, guid: cb781fcf83ba56b4fbe7691cf2bd8cf4, type: 3}
+      propertyPath: drawPoint
+      value: 
+      objectReference: {fileID: 6183529037297236745, guid: 2f604f37f9d07bb4da41075ef7a93588, type: 3}
+    - target: {fileID: 3772665224694940075, guid: cb781fcf83ba56b4fbe7691cf2bd8cf4, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 8
       objectReference: {fileID: 0}
@@ -1438,6 +1443,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4075937848129010, guid: 29636f40562819649b730c52f1babbcb, type: 3}
   m_PrefabInstance: {fileID: 571266634}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &1835205998 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3772665226284874246, guid: cb781fcf83ba56b4fbe7691cf2bd8cf4, type: 3}
+  m_PrefabInstance: {fileID: 1225154898}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &2057779501 stripped
 Transform:

@@ -4,20 +4,34 @@ using UnityEngine;
 
 public class DrawPoint : MonoBehaviour
 {
-    new ParticleSystem particleSystem;
+    public List<Light> lights;
+    public List<ParticleSystem> particleSystems;
     void Start()
     {
-        particleSystem = GetComponent<ParticleSystem>();
-        particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        Disable();
     }
 
     public void Activate()
     {
-        particleSystem.Play(true);
+        foreach (ParticleSystem ps in particleSystems)
+        {
+            ps.Play(true);
+        }
+        foreach (Light l in lights)
+        {
+            l.enabled = true;
+        }
     }
 
     public void Disable()
     {
-        particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        foreach (ParticleSystem ps in particleSystems)
+        {
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
+        foreach (Light l in lights)
+        {
+            l.enabled = false;
+        }
     }
 }

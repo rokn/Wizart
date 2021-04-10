@@ -26,11 +26,6 @@ public class DrawController : MonoBehaviour
         for (int i = 0; i < TouchPoints; i++)
         {
             GameObject drawPointInstance = Instantiate(this.drawPoint, new Vector3(10000,0,0), Quaternion.identity);
-            Renderer sphereRenderer = drawPointInstance.GetComponent<Renderer>();
-            sphereRenderer.material.SetColor(ColorProp, new Color(
-                    Random.Range(0f, 1f), 
-                    Random.Range(0f, 1f), 
-                    Random.Range(0f, 1f)));
             drawPointInstance.transform.parent = transform.parent;
             drawPointInstance.transform.localScale = new Vector3(1, 1, 1)* 1.8f;
             touchPointObjects[i] = drawPointInstance;

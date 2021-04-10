@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class DrawController : MonoBehaviour
 {
@@ -11,6 +13,7 @@ public class DrawController : MonoBehaviour
     const int TouchPoints = 10;
     const int MouseTouchIndex = 20;
     GameObject[] touchPointObjects;
+    DrawPoint[] drawPoints;
 
     Dictionary<int, int> touchToIdx;
     HashSet<int> freeIdx;
@@ -18,9 +21,8 @@ public class DrawController : MonoBehaviour
 
     void Start()
     {
-        touchToIdx = new Dictionary<int, int>();
-        freeIdx = new HashSet<int>();
         touchPointObjects = new GameObject[TouchPoints];
+        drawPoints = new DrawPoint[TouchPoints];
         for (int i = 0; i < TouchPoints; i++)
         {
             GameObject drawPointInstance = Instantiate(this.drawPoint, new Vector3(10000,0,0), Quaternion.identity);
@@ -32,7 +34,22 @@ public class DrawController : MonoBehaviour
             drawPointInstance.transform.parent = transform.parent;
             drawPointInstance.transform.localScale = new Vector3(1, 1, 1)* 1.8f;
             touchPointObjects[i] = drawPointInstance;
+            drawPoints[i] = drawPointInstance.GetComponent<DrawPoint>();
             freeIdx.Add(i);
+        }
+    }
+
+    void OnEnable()
+    {
+        touchToIdx = new Dictionary<int, int>();
+        freeIdx = new HashSet<int>(Enumerable.Range(0, TouchPoints));
+    }
+
+    void OnDisable()
+    {
+        for (int i = 0; i < TouchPoints; i++)
+        {
+            drawPoints[i].Disable();
         }
     }
 
@@ -87,10 +104,12 @@ public class DrawController : MonoBehaviour
         
         touchToIdx[idx] = freeIdx.First();
         freeIdx.Remove(touchToIdx[idx]);
+        drawPoints[touchToIdx[idx]].Activate();
     }
 
     void RemoveTouch(int idx)
 	{
+        drawPoints[touchToIdx[idx]].Disable();
         freeIdx.Add(touchToIdx[idx]);
     }
 
@@ -104,6 +123,6 @@ public class DrawController : MonoBehaviour
         
         Transform t = touchPointObjects[touchToIdx[idx]].transform;
         t.forward = info.normal;
-        t.position = new Vector3(info.point.x, info.point.y, info.point.z) + t.forward*0.15f;
+        t.position = new Vector3(info.point.x, info.point.y, info.point.z) + t.forward*0.25f;
     }
 }

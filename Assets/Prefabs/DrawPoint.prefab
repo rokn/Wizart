@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8871398042065683391}
   - component: {fileID: 443646821605455362}
   - component: {fileID: 7210257583106262060}
-  - component: {fileID: 5623363172147198471}
+  - component: {fileID: 3555429160638695556}
   m_Layer: 0
   m_Name: DrawPoint
   m_TagString: Untagged
@@ -4748,7 +4748,7 @@ ParticleSystemRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6183529037297236745}
   m_Enabled: 1
-  m_CastShadows: 3
+  m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -4805,7 +4805,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &5623363172147198471
+--- !u!114 &3555429160638695556
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

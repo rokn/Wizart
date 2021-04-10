@@ -8,16 +8,16 @@ public class DrawPoint : MonoBehaviour
     void Start()
     {
         particleSystem = GetComponent<ParticleSystem>();
-        particleSystem.Stop();
+        particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
     }
 
-    void Activate()
+    public void Activate()
     {
-        particleSystem.Play();
+        particleSystem.Play(true);
     }
 
-    void Disable()
+    public void Disable()
     {
-        particleSystem.Stop();
+        particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
     }
 }

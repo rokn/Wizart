@@ -729,7 +729,7 @@ ParticleSystem:
     angle: 0
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
-    radiusThickness: 1
+    radiusThickness: 0.15
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
@@ -812,7 +812,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.1
+      value: 4.28
       mode: 0
       spread: 0
       speed:
@@ -931,7 +931,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 400
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4813,9 +4813,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3191132104457037071}
-  - component: {fileID: 4016095253572939762}
+  - component: {fileID: 681759651120719544}
   m_Layer: 0
-  m_Name: FireSpellSmall
+  m_Name: FireSpellRing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4838,7 +4838,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!114 &4016095253572939762
+--- !u!114 &681759651120719544
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4847,14 +4847,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2995237869825623419}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 993aa3d01bade9348904ebedfdad0b35, type: 3}
+  m_Script: {fileID: 11500000, guid: 9665db2fab5a522479235119f3a6c859, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lights: []
   particleSystems:
   - {fileID: 3779279388179489266}
   - {fileID: 6646853984670040656}
   - {fileID: 6812342600702435515}
+  flameSpeed: 360
+  activeTime: 5
 --- !u!1 &4687325808272211107
 GameObject:
   m_ObjectHideFlags: 0
@@ -5584,7 +5585,7 @@ ParticleSystem:
     angle: 0
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
-    radiusThickness: 1
+    radiusThickness: 0.15
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
@@ -5667,7 +5668,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.1
+      value: 4.28
       mode: 0
       spread: 0
       speed:
@@ -5786,7 +5787,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 20
+      scalar: 500
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -10388,7 +10389,7 @@ ParticleSystem:
     angle: 0
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
-    radiusThickness: 1
+    radiusThickness: 0.15
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
@@ -10471,7 +10472,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.1
+      value: 4.28
       mode: 0
       spread: 0
       speed:
@@ -10590,13 +10591,13 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 35
+      scalar: 1000
       minScalar: 10
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
-          time: 0
+          time: 0.042144775
           value: 1
           inSlope: 0
           outSlope: 0

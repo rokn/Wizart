@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,12 @@ public class DrawPoint : MonoBehaviour
     void Start()
     {
         Disable();
+    }
+
+    void OnEnable()
+    {
+        lights ??= new List<Light>();
+        particleSystems ??= new List<ParticleSystem>();
     }
 
     public void Activate()

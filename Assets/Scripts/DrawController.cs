@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class DrawController : MonoBehaviour
 {
@@ -27,7 +25,7 @@ public class DrawController : MonoBehaviour
         {
             GameObject drawPointInstance = Instantiate(this.drawPoint, new Vector3(10000,0,0), Quaternion.identity);
             drawPointInstance.transform.parent = transform.parent;
-            drawPointInstance.transform.localScale = new Vector3(1, 1, 1)* 1.8f;
+            drawPointInstance.transform.localScale = new Vector3(1, 1, 1)* 1.2f;
             touchPointObjects[i] = drawPointInstance;
             drawPoints[i] = drawPointInstance.GetComponent<DrawPoint>();
             freeIdx.Add(i);

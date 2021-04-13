@@ -1,4 +1,6 @@
+using System.Linq;
 using Lean.Touch;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -57,13 +59,47 @@ public class PlayerController : MonoBehaviour
         {
             if (!GetMouseRayInfo(out RaycastHit info)) return;
 
-            Instantiate(flameCircleSpell, info.point, flameCircleSpell.transform.rotation);
+            CastFireCircle(info.point);
         }
+    }
+    public void CastFireCircleCallBack(LeanFinger finger)
+    {
+        var position = new Vector3();
+        var hits = new Vector3[finger.Snapshots.Count];
+        var i = 0;
+
+        foreach (LeanSnapshot fingerSnapshot in finger.Snapshots)
+        {
+            if (!CastTerrainRay(out RaycastHit info, fingerSnapshot.ScreenPosition)) return;
+            hits[i++] = info.point;
+            position += info.point;
+        }
+
+        position /= finger.Snapshots.Count;
+
+        float radius = hits.Average(hit => Vector3.Distance(hit, position));
+        float angle = Vector3.SignedAngle(Vector3.right, hits[0] - position, Vector3.up);
+
+        CastFireCircle(position, radius, angle);
+    }
+
+    public void CastFireCircle(Vector3 position, float radius = 4f, float angle = 0f)
+    {
+        var fc = Instantiate(flameCircleSpell, position, flameCircleSpell.transform.rotation)
+            .GetComponent<FlameCircle>();
+        fc.radius = radius;
+        fc.angle = angle;
     }
 
     bool GetMouseRayInfo(out RaycastHit info)
     {
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Vector2 position = Input.mousePosition;
+        return CastTerrainRay(out info, position);
+    }
+
+    bool CastTerrainRay(out RaycastHit info, Vector2 position)
+    {
+        Ray ray = mainCamera.ScreenPointToRay(position);
 
         return Physics.Raycast(ray, out info, Mathf.Infinity, groundLayer);
     }

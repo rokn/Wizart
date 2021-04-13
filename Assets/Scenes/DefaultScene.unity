@@ -996,7 +996,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1212242775}
+  - {fileID: 2034901023}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1005,6 +1007,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4075937848129010, guid: 29636f40562819649b730c52f1babbcb, type: 3}
   m_PrefabInstance: {fileID: 1755235551}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1212242774
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1212242775}
+  - component: {fileID: 1212242776}
+  m_Layer: 0
+  m_Name: LeanShape (Circle)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1212242775
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212242774}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 964048892}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1212242776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212242774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e71bec5d6367f434db37d04b3a3dbee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConnectEnds: 1
+  Visual: {fileID: 0}
+  Points:
+  - {x: 0, y: 5}
+  - {x: 1.9134173, y: 4.6193976}
+  - {x: 3.535534, y: 3.535534}
+  - {x: 4.6193976, y: 1.9134171}
+  - {x: 5, y: -0.00000021855695}
+  - {x: 4.6193976, y: -1.9134176}
+  - {x: 3.535534, y: -3.535534}
+  - {x: 1.9134164, y: -4.619398}
+  - {x: -0.0000004371139, y: -5}
+  - {x: -1.9134171, y: -4.6193976}
+  - {x: -3.5355344, y: -3.5355332}
+  - {x: -4.6193986, y: -1.9134157}
+  - {x: -5, y: 0.000000059624405}
+  - {x: -4.619397, y: 1.913418}
+  - {x: -3.5355327, y: 3.535535}
+  - {x: -1.9134171, y: 4.6193976}
 --- !u!850595691 &1212546760
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -1076,7 +1140,7 @@ PrefabInstance:
     - target: {fileID: 3772665224694940075, guid: cb781fcf83ba56b4fbe7691cf2bd8cf4, type: 3}
       propertyPath: drawPoint
       value: 
-      objectReference: {fileID: 2995237869825623419, guid: 9c1b54ed858161445a05264b5e5d0dce, type: 3}
+      objectReference: {fileID: 6183529037297236745, guid: 2f604f37f9d07bb4da41075ef7a93588, type: 3}
     - target: {fileID: 3772665224694940075, guid: cb781fcf83ba56b4fbe7691cf2bd8cf4, type: 3}
       propertyPath: groundLayer.m_Bits
       value: 8
@@ -1450,6 +1514,76 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 3772665226284874246, guid: cb781fcf83ba56b4fbe7691cf2bd8cf4, type: 3}
   m_PrefabInstance: {fileID: 1225154898}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2034901022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2034901023}
+  - component: {fileID: 2034901024}
+  m_Layer: 0
+  m_Name: LeanShapeDetector (Clockwise Circle)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2034901023
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034901022}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 964048892}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2034901024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2034901022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cc4ffa09f886dc40a02871007517fdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Use:
+    Filter: 0
+    IgnoreStartedOverGui: 1
+    RequiredFingerCount: 0
+    RequiredMouseButtons: 0
+    RequiredSelectable: {fileID: 0}
+  Shape: {fileID: 1212242776}
+  StepThreshold: 1
+  DistanceThreshold: 2.5
+  ErrorThreshold: 10
+  MinimumPoints: -1
+  Direction: 2
+  onDetected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 536789554}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: CastFireCircleCallBack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: You drew a clockwise circle!
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &2057779501 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4075937848129010, guid: 29636f40562819649b730c52f1babbcb, type: 3}

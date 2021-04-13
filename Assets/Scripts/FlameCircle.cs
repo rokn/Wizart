@@ -1,13 +1,13 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class FlameCircle : MonoBehaviour
 {
     public List<ParticleSystem> particleSystems;
     public float flameSpeed = 200;
     public float activeTime = 5;
+    public float radius = 4f;
+    public float angle = 0f;
 
     new bool enabled;
     bool ready;
@@ -15,7 +15,7 @@ public class FlameCircle : MonoBehaviour
     void Start()
     {
         Activate();
-        transform.Rotate(Vector3.forward, Random.value * 360);
+        transform.Rotate(Vector3.forward, angle);
     }
 
     void OnEnable()
@@ -33,6 +33,7 @@ public class FlameCircle : MonoBehaviour
             ps.Play(true);
             var shape = ps.shape;
             shape.arc = 0;
+            shape.radius = radius;
         }
         
         enabled = true;

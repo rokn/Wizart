@@ -165,6 +165,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   gravityForce: 9.81
+  animator: {fileID: 1088703965301463259}
   flameCircleSpell: {fileID: 2995237869825623419, guid: b2b460f0f8921a34b99674035f6d055a, type: 3}
 --- !u!1 &315682208916245929
 GameObject:

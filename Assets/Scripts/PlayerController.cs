@@ -18,16 +18,36 @@ public class PlayerController : MonoBehaviour
 
     public float gravityForce = 9.81f;
 
+    public Animator animator;
+
     public GameObject flameCircleSpell;
     
     const float MinDistance = 0.5f;
     Vector3 velocity = new Vector3();
 
     Vector3 targetPosition;
-    bool arrived = true;
+
+    static readonly int Running = Animator.StringToHash("isRunning");
+    bool IsRunning
+    {
+        set => animator?.SetBool(Running, value);
+    }
+
+    bool _arrived;
+
+    bool Arrived
+    {
+        get { return _arrived; }
+        set
+        {
+            _arrived = value;
+            IsRunning = !value;
+        }
+    }
 
     void OnEnable()
     {
+        Arrived = true;
         LeanTouch.OnFingerTap += HandleFingerTap;
     }
 
@@ -44,7 +64,7 @@ public class PlayerController : MonoBehaviour
         if (!hit) return;
         
         targetPosition = info.point;
-        arrived = false;
+        Arrived = false;
     }
 
     void Update()
@@ -113,7 +133,7 @@ public class PlayerController : MonoBehaviour
         if (Vector3.Distance(info.point, transform.position) < MinDistance) return;
         
         targetPosition = info.point;
-        arrived = false;
+        Arrived = false;
     }
 
     void FixedUpdate()
@@ -125,7 +145,7 @@ public class PlayerController : MonoBehaviour
 			velocity.y = -2f;
 		}
 
-        if (!arrived)
+        if (!Arrived)
         {
             Vector3 direction = targetPosition - transform.position;
 
@@ -137,7 +157,7 @@ public class PlayerController : MonoBehaviour
             if (direction.magnitude <= speed * Time.fixedDeltaTime*2)
             {
                 moveAmount = direction.magnitude / Time.fixedDeltaTime;
-                arrived = true;
+                Arrived = true;
 			}
 			Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward * moveAmount;
             velocity = new Vector3(moveDirection.x, velocity.y, moveDirection.z);

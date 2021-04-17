@@ -572,6 +572,7 @@ MonoBehaviour:
   speed: 2
   range: 8
   controller: {fileID: 1090190311263336602}
+  headTarget: {fileID: 0}
   turnSmoothTime: 0.4
 --- !u!143 &1090190311263336602
 CharacterController:
@@ -1543,7 +1544,7 @@ GameObject:
   - component: {fileID: 2678146248565971430}
   - component: {fileID: 6314015967230869344}
   m_Layer: 0
-  m_Name: Rig 1
+  m_Name: HeadRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -106,6 +106,7 @@ public class FlameCircle : MonoBehaviour
             if (emission.rateOverTimeMultiplier <= 10)
             {
                 Disable();
+                Destroy(gameObject);
             }
         }
     }

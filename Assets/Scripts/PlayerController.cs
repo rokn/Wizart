@@ -103,11 +103,11 @@ public class PlayerController : MonoBehaviour
         CastFireCircle(position, radius, angle);
     }
 
-    public void CastFireCircle(Vector3 position, float radius = 4f, float angle = 0f)
+    public void CastFireCircle(Vector3 position, float radius = 3f, float angle = 0f)
     {
         var fc = Instantiate(flameCircleSpell, position, flameCircleSpell.transform.rotation)
             .GetComponent<FlameCircle>();
-        fc.radius = radius;
+        fc.Radius = radius;
         fc.angle = angle;
     }
 

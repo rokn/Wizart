@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,8 +7,19 @@ public class FlameCircle : MonoBehaviour
     public List<ParticleSystem> particleSystems;
     public float flameSpeed = 200;
     public float activeTime = 5;
-    public float radius = 4f;
-    public float angle = 0f;
+    
+    public float angle;
+    public CapsuleCollider flamesCollider;
+    public int collidersCount;
+    
+    float radius = 3f;
+
+    public float Radius
+    {
+        get => radius;
+        set => radius = Mathf.Clamp(value, 1, 3);
+    }
+    
 
     new bool enabled;
     bool ready;
@@ -15,7 +27,23 @@ public class FlameCircle : MonoBehaviour
     void Start()
     {
         Activate();
-        transform.Rotate(Vector3.forward, angle);
+        transform.Rotate(Vector3.up, angle);
+
+        for (var i = 0; i < collidersCount; i++)
+        {
+            var collider = gameObject.AddComponent(flamesCollider.GetType()) as CapsuleCollider;
+            if (collider is null) continue;
+            
+            collider.center = new Vector3(
+                Mathf.Cos(2f*Mathf.PI * i/collidersCount) * Radius, 
+                flamesCollider.center.y,
+                Mathf.Sin(2f*Mathf.PI * i/collidersCount) * Radius);
+            collider.radius = flamesCollider.radius;
+            collider.height = flamesCollider.height;
+            collider.isTrigger = flamesCollider.isTrigger;
+        }
+        
+        flamesCollider.enabled = false;
     }
 
     void OnEnable()
@@ -33,7 +61,7 @@ public class FlameCircle : MonoBehaviour
             ps.Play(true);
             var shape = ps.shape;
             shape.arc = 0;
-            shape.radius = radius;
+            shape.radius = Radius;
         }
         
         enabled = true;
